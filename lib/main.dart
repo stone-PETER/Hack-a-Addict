@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/screens/fitness_screen.dart';
 import 'package:flutterapp/screens/home.dart';
+import 'package:flutterapp/screens/plan_screen.dart';
 import 'package:flutterapp/screens/therapist_screen.dart';
 import 'package:flutterapp/screens/club_screen.dart';
 import 'package:flutterapp/screens/welcome_screen.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         '/recovery_club': (context) => const ClubJoinPage(),
         '/joined_clubs': (context) => const JoinedClubsPage(),
         '/therapists': (context) => const TherapistScreen(),
+        '/plan': (context) => const PlanScreen(),
       
       },
       debugShowCheckedModeBanner: false,

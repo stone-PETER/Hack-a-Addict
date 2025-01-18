@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'dart:math' show pi, sin; // For the wave animation
 import 'package:simple_animations/simple_animations.dart'; // For PlayAnimation
@@ -597,6 +598,27 @@ class ScheduledMeetingsPage extends StatelessWidget {
                 );
               },
             ),
+    );
+  }
+}
+
+class HelplinePage extends StatelessWidget {
+  Future<void> _makePhoneCall() async {
+    final Uri phoneUri = Uri(scheme: 'tel', path: '14446');
+    if (await canLaunchUrl(phoneUri)) {
+      await launchUrl(phoneUri);
+    } else {
+      throw 'Could not launch $phoneUri';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: ElevatedButton(
+        onPressed: _makePhoneCall,
+        child: const Text('Call Helpline: 14446'),
+      ),
     );
   }
 }

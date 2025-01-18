@@ -82,7 +82,7 @@ class _TopicsScreenState extends State<TopicsScreen> {
                     context,
                     'Your recovery plan',
                     'assets/images/img1.jpg',
-                        () => _navigateToPage(context, '/recovery_plan'),
+                        () => _navigateToPage(context, '/plan'),
                   ),
                   _buildTopicButton(
                     context,
