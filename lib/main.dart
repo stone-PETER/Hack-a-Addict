@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/screens/fitness_screen.dart';
+import 'package:flutterapp/screens/club_screen.dart';
 import 'package:flutterapp/screens/welcome_screen.dart';
 import 'package:flutterapp/theme/theme.dart';
 
@@ -13,6 +15,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {
+        '/fitness_screen': (context) => WellnessApp(),
+        '/recover_club' : (context) => ClubJoinPage(),  // This defines the route
+      },
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: lightMode,

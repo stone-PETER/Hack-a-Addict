@@ -106,7 +106,7 @@ class _TopicsScreenState extends State<TopicsScreen> {
                     context,
                     'Health and fitness',
                     'assets/images/img5.jpg',
-                        () => _navigateToPage(context, '/health'),
+                        () => _navigateToPage(context, '/fitness_screen'),
                   ),
                 ],
               ),
