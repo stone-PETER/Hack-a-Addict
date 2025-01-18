@@ -19,12 +19,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const WelcomeScreen(), // Set WelcomeScreen as the default route
         '/fitness_screen': (context) => WellnessApp(),
-<<<<<<< HEAD
         '/recovery_club': (context) => ClubJoinPage(),
       
-=======
-        '/recover_club' : (context) => ClubJoinPage(),  // This defines the route
->>>>>>> parent of 34d908e (before main edit)
       },
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
