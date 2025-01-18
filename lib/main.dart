@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       routes: {
         '/fitness_screen': (context) => WellnessApp(),
-        '/recover_club' : (context) => ClubJoinPage(),  // This defines the route
+        '/recovery_club' : (context) => ClubJoinPage(),  // This defines the route
       },
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
