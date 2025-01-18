@@ -6,27 +6,27 @@ import 'package:simple_animations/simple_animations.dart'; // For PlayAnimation
 
 List<Map<String, dynamic>> scheduledMeetings = [];
 
-void main() {
-  runApp(const MyApp());
-}
+// void main() {
+//   runApp(const MyApp());
+// }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+// class MyApp extends StatelessWidget {
+//   const MyApp({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Therapist App',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const TherapistPage(),
-        debugShowCheckedModeBanner: false);
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//         title: 'Therapist App',
+//         theme: ThemeData(
+//           primarySwatch: Colors.blue,
+//         ),
+//         home: const TherapistScreen(),
+//         debugShowCheckedModeBanner: false);
+//   }
+// }
 
-class TherapistPage extends StatelessWidget {
-  const TherapistPage({Key? key}) : super(key: key);
+class TherapistScreen extends StatelessWidget {
+  const TherapistScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class TherapistPage extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 20),
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/therapists/therapistBg.png'),
+                      image: AssetImage('assets/therapists/therapistBg.jpg'),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -60,7 +60,7 @@ class TherapistPage extends StatelessWidget {
                 ),
                 EnhancedTherapistCard(
                   name: 'Dr Varghese Paul',
-                  imageUrl: 'assets/therapists/paul_varghese.png',
+                  imageUrl: 'assets/therapists/paul_varghese.jpg',
                   specialties: ['Anxiety', 'Depression', 'Trauma'],
                   offersOnline: true,
                   onScheduleTap: () =>
@@ -68,7 +68,7 @@ class TherapistPage extends StatelessWidget {
                 ),
                 EnhancedTherapistCard(
                   name: 'Dr Amala Wilson',
-                  imageUrl: 'assets/therapists/amala_wilson.png',
+                  imageUrl: 'assets/therapists/amala_wilson.jpg',
                   specialties: ['Relationships', 'Stress', 'Depression'],
                   offersOnline: true,
                   onScheduleTap: () =>
@@ -76,7 +76,7 @@ class TherapistPage extends StatelessWidget {
                 ),
                 EnhancedTherapistCard(
                   name: 'Dr Wong Ping',
-                  imageUrl: 'assets/therapists/wong_kong.png',
+                  imageUrl: 'assets/therapists/wong_kong.jpg',
                   specialties: ['Anxiety', 'PTSD', 'Addiction'],
                   offersOnline: false,
                   onScheduleTap: () =>

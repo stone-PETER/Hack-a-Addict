@@ -24,27 +24,27 @@ class Club {
   });
 }
 
-class RecoveryClub extends StatelessWidget {
-  const RecoveryClub({super.key});
+// class RecoveryClub extends StatelessWidget {
+//   const RecoveryClub({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Recovery Club',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: Colors.white,
-      ),
-      home: const ClubJoinPage(),
-      routes: {
-        '/': (context) => const ClubJoinPage(),
-        '/back': (context) => const Placeholder(),
-        '/joined_clubs': (context) => const JoinedClubsPage(),
-      },
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Recovery Club',
+//       debugShowCheckedModeBanner: false,
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//         scaffoldBackgroundColor: Colors.white,
+//       ),
+//       home: const ClubJoinPage(),
+//       routes: {
+//         '/': (context) => const ClubJoinPage(),
+//         '/recovery_club': (context) => const Placeholder(),
+//         '/joined_clubs': (context) => const JoinedClubsPage(),
+//       },
+//     );
+//   }
+// }
 
 class JoinedClubsProvider extends ChangeNotifier {
   final Set<String> _joinedClubs = {};
@@ -165,8 +165,7 @@ class _ClubJoinPageState extends State<ClubJoinPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<JoinedClubsProvider>(
-      builder: (context, provider, child) => Scaffold(
+    return Scaffold(
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -210,7 +209,7 @@ class _ClubJoinPageState extends State<ClubJoinPage> {
                         return _buildClubTile(
                           displayedClubs[index],
                           context,
-                          provider,
+                          Provider.of<JoinedClubsProvider>(context),
                         );
                       },
                     ),
@@ -249,7 +248,7 @@ class _ClubJoinPageState extends State<ClubJoinPage> {
                   const SizedBox(height: 20),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/back');
+                      Navigator.pushNamed(context, '/home');
                     },
                     child: const Icon(
                       Icons.arrow_back,
@@ -261,8 +260,7 @@ class _ClubJoinPageState extends State<ClubJoinPage> {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 
   @override
@@ -277,8 +275,7 @@ class JoinedClubsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<JoinedClubsProvider>(
-      builder: (context, provider, child) => Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: const Text('Your Joined Clubs'),
           leading: IconButton(
@@ -286,7 +283,9 @@ class JoinedClubsPage extends StatelessWidget {
             onPressed: () => Navigator.pop(context),
           ),
         ),
-        body: provider.joinedClubs.isEmpty
+        body: Consumer<JoinedClubsProvider>(
+        builder: (context, provider, child) {
+          return provider.joinedClubs.isEmpty
             ? const Center(
                 child: Text('You haven\'t joined any clubs yet'),
               )
@@ -340,7 +339,7 @@ class JoinedClubsPage extends StatelessWidget {
                     ),
                   );
                 },
-              ),
+              );},
       ),
     );
   }
