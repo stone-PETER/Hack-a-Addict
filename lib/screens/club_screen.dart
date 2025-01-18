@@ -1,42 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class RecoveryClubScreen extends StatefulWidget {
-  const RecoveryClubScreen({super.key});
+// void main() {
+//   runApp(
+//     ChangeNotifierProvider(
+//       create: (_) => JoinedClubsProvider(),
+//       child: const RecoveryClub(),
+//     ),
+//   );
+// }
 
-  @override
-  State<RecoveryClubScreen> createState() => _RecoveryClubScreenState();
+// State Management Class
+
+class Club {
+  final String name;
+  final String members;
+  final String imagePath;
+
+  Club({
+    required this.name,
+    required this.members,
+    required this.imagePath,
+  });
 }
 
-class _RecoveryClubScreenState extends State<RecoveryClubScreen> {
+class RecoveryClub extends StatelessWidget {
+  const RecoveryClub({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => JoinedClubsProvider(),
-      child: MaterialApp(
-        title: 'Recovery Club',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          scaffoldBackgroundColor: Colors.white,
-        ),
-        home: const ClubJoinPage(),
-        routes: {
-          '/': (context) => const ClubJoinPage(),
-          '/back': (context) => const Placeholder(),
-          '/joined_clubs': (context) => const JoinedClubsPage(),
-        },
+    return MaterialApp(
+      title: 'Recovery Club',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: Colors.white,
       ),
+      home: const ClubJoinPage(),
+      routes: {
+        '/': (context) => const ClubJoinPage(),
+        '/back': (context) => const Placeholder(),
+        '/joined_clubs': (context) => const JoinedClubsPage(),
+      },
     );
   }
 }
 
-// State Management Class
 class JoinedClubsProvider extends ChangeNotifier {
   final Set<String> _joinedClubs = {};
 
   Set<String> get joinedClubs => _joinedClubs;
-
+  
   bool isClubJoined(String clubName) => _joinedClubs.contains(clubName);
 
   void joinClub(String clubName) {
@@ -50,20 +64,9 @@ class JoinedClubsProvider extends ChangeNotifier {
   }
 }
 
-// Club model class
-class Club {
-  final String name;
-  final String members;
-  final String imagePath;
 
-  Club({
-    required this.name,
-    required this.members,
-    required this.imagePath,
-  });
-}
 
-// ClubJoinPage
+
 class ClubJoinPage extends StatefulWidget {
   const ClubJoinPage({super.key});
 
@@ -178,7 +181,7 @@ class _ClubJoinPageState extends State<ClubJoinPage> {
               child: Column(
                 children: [
                   const Text(
-                    'Join the club that suits\nyour needs',
+                    'Join the club that suit\nyour needs',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 24,
@@ -212,6 +215,47 @@ class _ClubJoinPageState extends State<ClubJoinPage> {
                       },
                     ),
                   ),
+                  const Text(
+                    'Create a new community for\nlikeminded individuals',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Color.fromARGB(31, 0, 3, 17),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/joined_clubs');
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF90EE90),
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      child: const Text(
+                        'View your Clubs',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/back');
+                    },
+                    child: const Icon(
+                      Icons.arrow_back,
+                      size: 30,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -228,7 +272,6 @@ class _ClubJoinPageState extends State<ClubJoinPage> {
   }
 }
 
-// JoinedClubsPage
 class JoinedClubsPage extends StatelessWidget {
   const JoinedClubsPage({super.key});
 
@@ -252,8 +295,49 @@ class JoinedClubsPage extends StatelessWidget {
                 itemCount: provider.joinedClubs.length,
                 itemBuilder: (context, index) {
                   String clubName = provider.joinedClubs.elementAt(index);
-                  return ListTile(
-                    title: Text(clubName),
+                  // Find the club details
+                  Club club = _ClubJoinPageState().allClubs.firstWhere(
+                    (c) => c.name == clubName,
+                    orElse: () => Club(
+                      name: clubName,
+                      members: 'Unknown members',
+                      imagePath: 'assets/club_images/default_logo.png',
+                    ),
+                  );
+                  return Container(
+                    margin: const EdgeInsets.only(bottom: 12),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFE0F4F0),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: ListTile(
+                      leading: Image.asset(
+                        club.imagePath,
+                        width: 40,
+                        height: 40,
+                      ),
+                      title: Text(
+                        club.name,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(club.members),
+                      trailing: ElevatedButton(
+                        onPressed: () {
+                          provider.leaveClub(club.name);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Left ${club.name}')),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.grey,
+                          foregroundColor: Colors.black,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        child: const Text('Leave'),
+                      ),
+                    ),
                   );
                 },
               ),

@@ -74,43 +74,49 @@ class _TopicsScreenState extends State<TopicsScreen> {
                 ],
               ),
             ),
-            Expanded(
-              child: ListView(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                children: [
-                  _buildTopicButton(
-                    context,
-                    'Your recovery plan',
-                    'assets/images/img1.jpg',
-                        () => _navigateToPage(context, '/recovery_plan'),
-                  ),
-                  _buildTopicButton(
-                    context,
-                    'Get to know recovery club',
-                    'assets/images/img2.jpg',
-                        () => _navigateToPage(context, '/recovery_club'),
-                  ),
-                  _buildTopicButton(
-                    context,
-                    'Meet our therapists',
-                    'assets/images/img3.jpg',
-                        () => _navigateToPage(context, '/therapists'),
-                  ),
-                  _buildTopicButton(
-                    context,
-                    'Games and challenges',
-                    'assets/images/img4.jpg',
-                        () => _navigateToPage(context, '/games'),
-                  ),
-                  _buildTopicButton(
-                    context,
-                    'Health and fitness',
-                    'assets/images/img5.jpg',
-                        () => _navigateToPage(context, '/fitness_screen'),
-                  ),
-                ],
-              ),
-            ),
+           Expanded(
+  child: ListView(
+    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+    children: [
+      _buildTopicButton(
+        context,
+        'Your recovery plan',
+        'assets/images/img1.jpg',
+        () => _navigateToPage(context, '/recovery_plan'),
+      ),
+      _buildTopicButton(
+        context,
+        'Get to know recovery club',
+        'assets/images/img2.jpg',
+        () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const RecoveryClubScreen(),
+          ),
+        ),
+      ),
+      _buildTopicButton(
+        context,
+        'Meet our therapists',
+        'assets/images/img3.jpg',
+        () => _navigateToPage(context, '/therapists'),
+      ),
+      _buildTopicButton(
+        context,
+        'Games and challenges',
+        'assets/images/img4.jpg',
+        () => _navigateToPage(context, '/games'),
+      ),
+      _buildTopicButton(
+        context,
+        'Health and fitness',
+        'assets/images/img5.jpg',
+        () => _navigateToPage(context, '/fitness_screen'),
+      ),
+    ],
+  ),
+),
+
             ElevatedButton(
               onPressed: _incrementCompletedTopics, // Update state on button press
               child: const Text('Complete a Topic'),
@@ -170,4 +176,4 @@ class _TopicsScreenState extends State<TopicsScreen> {
       ),
     );
   }
-}
+}  
