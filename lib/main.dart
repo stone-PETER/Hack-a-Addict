@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/screens/fitness_screen.dart';
+import 'package:flutterapp/screens/games_screen.dart';
 import 'package:flutterapp/screens/home.dart';
 import 'package:flutterapp/screens/plan_screen.dart';
 import 'package:flutterapp/screens/therapist_screen.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         '/joined_clubs': (context) => const JoinedClubsPage(),
         '/therapists': (context) => const TherapistScreen(),
         '/plan': (context) => const PlanScreen(),
+        '/games': (context) => const ChallengesGamesPage(),
       
       },
       debugShowCheckedModeBanner: false,

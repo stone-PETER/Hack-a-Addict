@@ -111,10 +111,10 @@ class _TopicsScreenState extends State<TopicsScreen> {
                 ],
               ),
             ),
-            ElevatedButton(
-              onPressed: _incrementCompletedTopics, // Update state on button press
-              child: const Text('Complete a Topic'),
-            ),
+            // ElevatedButton(
+            //   onPressed: _incrementCompletedTopics, // Update state on button press
+            //   child: const Text('Complete a Topic'),
+            // ),
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16.0),

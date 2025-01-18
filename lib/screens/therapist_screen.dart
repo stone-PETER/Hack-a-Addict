@@ -98,7 +98,7 @@ class TherapistScreen extends StatelessWidget {
                         onPressed: () => Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const HelpLinePage()),
+                              builder: (context) => const HelplinePage()),
                         ),
                         child: const Text('Help Line'),
                       ),
@@ -535,41 +535,41 @@ class ScheduledMeetingsDialog extends StatelessWidget {
 }
 
 // Help Line Page (unchanged)
-class HelpLinePage extends StatelessWidget {
-  const HelpLinePage({Key? key}) : super(key: key);
+// class HelpLinePage extends StatelessWidget {
+//   const HelpLinePage({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Help Line'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text(
-              'Nasha Mukt Bharat Abhiyan',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 20),
-            Text(
-              '14446',
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Help Line'),
+//       ),
+//       body: Center(
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: const [
+//             Text(
+//               'Nasha Mukt Bharat Abhiyan',
+//               style: TextStyle(
+//                 fontSize: 24,
+//                 fontWeight: FontWeight.bold,
+//               ),
+//             ),
+//             SizedBox(height: 20),
+//             Text(
+//               '14446',
+//               style: TextStyle(
+//                 fontSize: 32,
+//                 fontWeight: FontWeight.bold,
+//                 color: Colors.blue,
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class ScheduledMeetingsPage extends StatelessWidget {
   const ScheduledMeetingsPage({Key? key}) : super(key: key);
@@ -603,6 +603,8 @@ class ScheduledMeetingsPage extends StatelessWidget {
 }
 
 class HelplinePage extends StatelessWidget {
+  const HelplinePage({Key? key}) : super(key: key);
+  
   Future<void> _makePhoneCall() async {
     final Uri phoneUri = Uri(scheme: 'tel', path: '14446');
     if (await canLaunchUrl(phoneUri)) {
