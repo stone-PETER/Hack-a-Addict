@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutterapp/widgets/custom_scaffold.dart'; // Assuming CustomScaffold is in the widgets folder
 import 'package:flutterapp/screens/allset.dart';  // Assuming AllSetPage is located in 'all_set_page.dart'
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutterapp/firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+// ...
+
+
 
 class QuestionnaireScreen extends StatefulWidget {
   const QuestionnaireScreen({super.key});
@@ -18,11 +25,36 @@ class _QuestionnaireScreenState extends State<QuestionnaireScreen> {
   final TextEditingController _relationshipController = TextEditingController();
   final TextEditingController _concernsController = TextEditingController();
 
+  bool _isLoading = true;
+  
+  @override
+  void initState() {
+    super.initState();
+    _initializeFirebase();
+  }
+
+  Future<void> _initializeFirebase() async {
+    try {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+    } catch (e) {
+      print('Failed to initialize Firebase: $e');
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
   // Create a GlobalKey to use the form state
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
     return CustomScaffold(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -31,45 +63,45 @@ class _QuestionnaireScreenState extends State<QuestionnaireScreen> {
           child: ListView(
             children: [
               // Question 1: Substance
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.2),
-                      blurRadius: 8,
-                      spreadRadius: 2,
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'What substances are you currently using?',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 10),
-                    TextFormField(
-                      controller: _substanceController,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        filled: true,
-                        fillColor: Colors.white,
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please fill in this field';
-                        }
-                        return null;
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
+              // Container(
+              //   padding: const EdgeInsets.all(12),
+              //   decoration: BoxDecoration(
+              //     color: Colors.white,
+              //     borderRadius: BorderRadius.circular(10),
+              //     boxShadow: [
+              //       BoxShadow(
+              //         color: Colors.grey.withOpacity(0.2),
+              //         blurRadius: 8,
+              //         spreadRadius: 2,
+              //       ),
+              //     ],
+              //   ),
+              //   child: Column(
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: [
+              //       const Text(
+              //         'What substances are you currently using?',
+              //         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              //       ),
+              //       const SizedBox(height: 10),
+              //       TextFormField(
+              //         controller: _substanceController,
+              //         decoration: const InputDecoration(
+              //           border: OutlineInputBorder(),
+              //           filled: true,
+              //           fillColor: Colors.white,
+              //         ),
+              //         validator: (value) {
+              //           if (value == null || value.isEmpty) {
+              //             return 'Please fill in this field';
+              //           }
+              //           return null;
+              //         },
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              // const SizedBox(height: 20),
 
               // Question 2: Frequency
               Container(
@@ -89,7 +121,7 @@ class _QuestionnaireScreenState extends State<QuestionnaireScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'How often do you use them (daily, weekly, occasionally)?',
+                      'How often do you use addictive substance (daily, weekly, occasionally)?',
                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 10),
@@ -319,16 +351,46 @@ class _QuestionnaireScreenState extends State<QuestionnaireScreen> {
 
               // Submit Button
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   // Validate the form
                   if (_formKey.currentState?.validate() ?? false) {
-                    // If validation is successful, navigate to the All Set page
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const AllSetPage()),
-                    );
+                    try {
+                      // Get Firestore instance
+                      final FirebaseFirestore firestore = FirebaseFirestore.instance;
+                      
+                      // Create a document in 'questionnaires' collection
+                      await firestore.collection('questionnaires').add({
+                        'frequency': _frequencyController.text,
+                        'duration': _durationController.text,
+                        'healthIssues': _healthIssuesController.text,
+                        'emergencies': _emergenciesController.text,
+                        'relationship_affected': _relationshipController.text,
+                        'concerns': _concernsController.text,
+                        'timestamp': FieldValue.serverTimestamp(),
+                      });
+
+                      // Show success message
+                      if (mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Questionnaire submitted successfully!')),
+                        );
+                        
+                        // Navigate to AllSet page
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const AllSetPage()),
+                        );
+                      }
+                    } catch (e) {
+                      // Show error message if submission fails
+                      if (mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Error submitting form: $e')),
+                        );
+                      }
+                    }
                   } else {
-                    // If validation fails, show a message
+                    // Show validation error message
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('Please fill in all the fields.'),

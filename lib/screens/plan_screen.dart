@@ -638,7 +638,7 @@ class MentalRecoveryPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Color.fromARGB(255, 0, 0, 0),
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -647,7 +647,7 @@ class MentalRecoveryPage extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,
-                      color: const Color.fromARGB(255, 226, 226, 226),
+                      color: const Color.fromARGB(255, 63, 63, 63),
                     ),
                   ),
                   const SizedBox(height: 30),
@@ -721,12 +721,13 @@ class MentalRecoveryPage extends StatelessWidget {
   Widget _buildButton(BuildContext context, String text, VoidCallback onPressed) {
     return Container(
       width: double.infinity,
-      height: 50,
+      height: 60,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFFB2DFDB), // Light mint color
           foregroundColor: Colors.black,
+          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25),
           ),
@@ -734,9 +735,10 @@ class MentalRecoveryPage extends StatelessWidget {
         child: Text(
           text,
           style: const TextStyle(
-            fontSize: 18,
+            fontSize: 16.0, // Adjusted font size
             fontWeight: FontWeight.w500,
           ),
+          textAlign: TextAlign.center,
         ),
       ),
     );

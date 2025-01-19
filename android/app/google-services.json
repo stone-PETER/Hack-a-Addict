@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "497841335039",
+    "project_id": "hack-a-addict-ffaa5",
+    "storage_bucket": "hack-a-addict-ffaa5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:497841335039:android:eb7d0384524fcb87c97aca",
+        "android_client_info": {
+          "package_name": "com.example.flutterapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeEgUNKCrXV11gIZRXX1cFh1Q-1MxcrdY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
